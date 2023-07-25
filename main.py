@@ -1,4 +1,3 @@
-
 from os import getcwd, path
 import sys
 import winreg
@@ -11,7 +10,6 @@ from itertools import islice
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
-
 
 rootPath = getcwd()
 initFile = path.join(rootPath, r"IMU\drive_1.csv")
@@ -109,37 +107,38 @@ fig = plt.figure(figsize=(16, 8))  # Initialize matplotlib figure for graphing p
 canvas = FigureCanvasTkAgg(fig, master=root)  # Special type of "canvas" to allow for matplotlib graphing
 
 plot_widget = canvas.get_tk_widget()
-plot_widget.grid(row=0, column=0, columnspan=11)  # Add the plot to the tkinter widget
+plot_widget.grid(row=1, column=2, columnspan=11, rowspan=20)  # Add the plot to the tkinter widget
 filePath = tk.StringVar(value=getcwd())
-tk.Label(root, text='File Path').grid(row=1, column=0, sticky='s')
-tk.Entry(root, width=80, textvariable=filePath).grid(row=2, column=0, sticky='sw')
-tk.Button(root, text="...", command=selectFile).grid(row=2, column=0, sticky='e')
+tk.Label(root, text='File Path').grid(row=0, column=2, sticky='s')
+tk.Entry(root, width=150, textvariable=filePath).grid(row=0, column=3, sticky='sw')
+tk.Button(root, text="...", command=selectFile).grid(row=0, column=2, sticky='e')
 
 readFrom = tk.IntVar(value=0)
-tk.Label(root, text='Read From').grid(row=1, column=2, sticky='s')
-tk.Spinbox(root, from_=1, to=999999, textvariable=readFrom).grid(row=2, column=2, sticky='s')
+tk.Label(root, text='Read From').grid(row=1, column=0, sticky='s')
+tk.Spinbox(root, from_=1, to=999999, textvariable=readFrom).grid(row=1, column=1, sticky='s')
 
 readTo = tk.IntVar(value=100000)
-tk.Label(root, text='Read To').grid(row=1, column=3, sticky='s')
-tk.Spinbox(root, from_=0, textvariable=readTo).grid(row=2, column=3, sticky='s')
+tk.Label(root, text='Read To').grid(row=2, column=0, sticky='s')
+tk.Spinbox(root, from_=0, textvariable=readTo).grid(row=2, column=1, sticky='s')
 
 readStep = tk.IntVar(value=1)
-tk.Label(root, text='Read Step').grid(row=1, column=4, sticky='s')
-tk.Spinbox(root, from_=0, textvariable=readStep, increment=1).grid(row=2, column=4, sticky='s')
+tk.Label(root, text='Read Step').grid(row=3, column=0, sticky='s')
+tk.Spinbox(root, from_=0, textvariable=readStep, increment=1).grid(row=3, column=1, sticky='s')
 
 readColumn1 = tk.IntVar(value=1)
-tk.Label(root, text='Take Column 1').grid(row=1, column=5, sticky='s')
-tk.Spinbox(root, from_=0, textvariable=readColumn1).grid(row=2, column=5, sticky='s')
+tk.Label(root, text='Take Column 1').grid(row=4, column=0, sticky='s')
+tk.Spinbox(root, from_=0, textvariable=readColumn1).grid(row=4, column=1, sticky='se')
 
 readColumn2 = tk.IntVar(value=0)
-tk.Label(root, text='Take Column 2').grid(row=1, column=7, sticky='s')
-tk.Spinbox(root, from_=0, textvariable=readColumn2).grid(row=2, column=7, sticky='s')
+tk.Label(root, text='Take Column 2').grid(row=7, column=0, sticky='s')
+tk.Spinbox(root, from_=0, textvariable=readColumn2).grid(row=7, column=1, sticky='s')
 
 isIntegrate = tk.BooleanVar(value=False)
-tk.Checkbutton(root, variable=isIntegrate, text='Integrate').grid(row=2, column=6, sticky='s')
+tk.Checkbutton(root, variable=isIntegrate, text='Integrate').grid(row=5, column=0, sticky='s')
 
-tk.Button(root, text="Read", command=readLines).grid(row=1, column=10, sticky='ew')
+tk.Button(root, text="Read", command=readLines).grid(row=19, column=0, sticky='ew', columnspan=2)
 loadValues()
+
 
 # start Tk
 root.protocol("WM_DELETE_WINDOW", Exit)  # Close window handler
